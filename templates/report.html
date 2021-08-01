@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% block title %}
+Your Business Report here - Microintelligence
+{% endblock title %}
+{% block body %}
+<div class="container my-4 table-responsive">
+  <h3>
+    Business Sales Report -
+  </h3>
+  <hr>
+
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">Sno.</th>
+        <th scope="col">Date</th>
+        <th scope="col">Costumer Name</th>
+        <th scope="col">Phone Number</th>
+        <th scope="col">Email</th>
+        <th scope="col">Service</th>
+        <th scope="col">Price</th>
+      </tr>
+    </thead>
+    {% for i in fachSale %}
+    <tbody>
+      <tr>
+        <th scope="row">{{i.id}}</th>
+        <td>{{i.date}}</td>
+        <td>{{i.cosName}}</td>
+        <td>{{i.phone}}</td>
+        <td>{{i.email}}</td>
+        <td>{{i.serviceName}}</td>
+        <td>{{i.price}}</td>
+      </tr>
+    </tbody>
+    {% endfor %}
+    <tr>
+      <th>Total -</th>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>{{lastSale}}</td>
+    </tr>
+  </table>
+</div>
+
+<div class="container my-4 table-responsive">
+  <h3>
+    Business Expances Report -
+  </h3>
+  <hr>
+
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">Sno.</th>
+        <th scope="col">Date</th>
+        <th scope="col">Saler Name</th>
+        <th scope="col">Saler Phone Number</th>
+        <th scope="col">Saler Email</th>
+        <th scope="col">Saler Service</th>
+        <th scope="col">Saler Price</th>
+      </tr>
+    </thead>
+    {% for i in fachExp %}
+    <tbody>
+      <tr>
+        <th scope="row">{{i.id}}</th>
+        <td>{{i.date}}</td>
+        <td>{{i.buyerName}}</td>
+        <td>{{i.buyerPhone}}</td>
+        <td>{{i.buyerEmail}}</td>
+        <td>{{i.serviceName}}</td>
+        <td>{{i.price}}</td>
+      </tr>
+    </tbody>
+    {% endfor %}
+    <tr>
+      <th>Total -</th>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>{{lastExp}}</td>
+    </tr>
+  </table>
+</div>
+{% endblock body %}

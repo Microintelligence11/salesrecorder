@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}
+Contact US - Sales Recorder
+{% endblock title %}
+{% block body %}
+<div class="container my-4">
+    <h3>Fill this form for any quary or questions -</h3>
+    <hr>
+    <form action="index" method="post">{% csrf_token %}
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" placeholder="Enter your  name here!" required
+                name="name">
+        </div>
+        <div class="mb-3">
+            <label for="phone" class="form-label">Phone Number</label>
+            <input type="text" class="form-control" id="phone" placeholder="Enter your  phone number here!"
+                required name="phone">
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" placeholder="Enter your costumer email here!" required
+                name="email">
+        </div>
+        <div class="mb-3">
+            <label for="address" class="form-label">Address</label>
+            <input type="text" class="form-control" id="address" placeholder="Enter your address here!"
+                required name="address">
+        </div>
+        <div class="mb-3">
+            <label for="quary" class="form-label">Type your Quary here!</label>
+            <textarea class="form-control" id="quary" rows="4" name="quary" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-outline-success">Submit</button>
+    </form>
+
+</div>
+{% endblock body %}

@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% block title %}
+Sale Recorder by - Microintelligence
+{% endblock title %}
+{% block body %}
+{% if request.user.is_authenticated %}
+<div class="container my-4">
+    <h3>Please fill your sales values here!</h3>
+    <hr>
+    <form action="index" method="post">{% csrf_token %}
+        <div class="mb-3">
+            <label for="date" class="form-label">Date</label>
+            <input type="date" class="form-control" id="date" placeholder="Enter Date here!" required name="date">
+        </div>
+        <div class="mb-3">
+            <label for="cosName" class="form-label">Costumer Name</label>
+            <input type="text" class="form-control" id="cosName" placeholder="Enter your costumer name here!" required
+                name="cosName">
+        </div>
+        <div class="mb-3">
+            <label for="phone" class="form-label">Phone Number</label>
+            <input type="text" class="form-control" id="phone" placeholder="Enter your costumer phone number here!"
+                required name="phone">
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" placeholder="Enter your costumer email here!" required
+                name="email">
+        </div>
+        <div class="mb-3">
+            <label for="serviceName" class="form-label">Service Name</label>
+            <input type="text" class="form-control" id="serviceName" placeholder="Enter your costumer service here!"
+                required name="serviceName">
+        </div>
+        <div class="mb-3">
+            <label for="price" class="form-label">Price</label>
+            <input type="text" class="form-control" id="price" placeholder="Enter price here!" required name="price">
+        </div>
+        <button type="submit" class="btn btn-outline-success">Submit</button>
+    </form>
+
+</div>
+{% endif %}
+{% if request.user.is_authenticated %}
+<div class="container my-4">
+    <h3>Please fill your purchase/buy values here!</h3>
+    <hr>
+    <form action="expance" method="post">{% csrf_token %}
+        <div class="mb-3">
+            <label for="date" class="form-label">Date</label>
+            <input type="date" class="form-control" id="date" placeholder="Enter Date here!" required name="date">
+        </div>
+        <div class="mb-3">
+            <label for="buyerName" class="form-label">Buyer Name</label>
+            <input type="text" class="form-control" id="buyerName" placeholder="Enter your buyer name here!" required
+                name="buyerName">
+        </div>
+        <div class="mb-3">
+            <label for="buyerPhone" class="form-label">Phone Number</label>
+            <input type="text" class="form-control" id="buyerPhone" placeholder="Enter your buyer phone number here!"
+                required name="buyerPhone">
+        </div>
+        <div class="mb-3">
+            <label for="buyerEmail" class="form-label">Email</label>
+            <input type="email" class="form-control" id="buyerEmail" placeholder="Enter your buyer email here!" required
+                name="buyerEmail">
+        </div>
+        <div class="mb-3">
+            <label for="buyerServiceName" class="form-label">Service/product Name</label>
+            <input type="text" class="form-control" id="buyerServiceName"
+                placeholder="Enter your buyer service/product name here!" required name="serviceName">
+        </div>
+        <div class="mb-3">
+            <label for="price" class="form-label">Price</label>
+            <input type="text" class="form-control" id="price" placeholder="Enter price here!" required name="price">
+        </div>
+        <button type="submit" class="btn btn-outline-success">Submit</button>
+        <a href="report"><button type="button" class="btn btn-outline-dark">Show Report</button></a>
+    </form>
+</div>
+{% endif %}
+{% endblock body %}
