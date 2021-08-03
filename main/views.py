@@ -43,16 +43,17 @@ def index(request):
 
     noSale = saleData.objects.count()
     noExp = expanceData.objects.count()
+    countNo = {'noSale':noSale,'noEcp':noExp}
     lastSale = saleData.objects.all().aggregate(Sum('price'))['price__sum']
     lastExp = expanceData.objects.all().aggregate(Sum('price'))['price__sum']
     if lastSale == None:
-        return render(request,'index.html')
+        return render(request,'index.html',countNo)
     if lastExp == None:
-        return render(request,'index.html')
+        return render(request,'index.html',countNo)
     else:        
         profitLoss = lastSale - lastExp
     params = {'profitLoss':profitLoss,'noSale':noSale,'noExp':noExp}
-    return render(request,'index.html',params)   
+    return render(request,'index.html',params,countNo)   
     
 def expance(request):
     if request.method == 'POST':
@@ -90,31 +91,33 @@ def expance(request):
 def help(request):
     noSale = saleData.objects.count()
     noExp = expanceData.objects.count()
+    countNo = {'noSale':noSale,'noExp':noExp}
     lastSale = saleData.objects.all().aggregate(Sum('price'))['price__sum']
     lastExp = expanceData.objects.all().aggregate(Sum('price'))['price__sum']
     if lastSale == None:
-        return render(request,'help.html')
+        return render(request,'help.html',countNo)
 
     if lastExp == None:
-        return render(request,'help.html')    
+        return render(request,'help.html',countNo)    
     else:
         profitLoss = lastSale - lastExp   
     params = {'noSale':noSale,'noExp':noExp,'profitLoss':profitLoss}
-    return render(request,'help.html',params)
+    return render(request,'help.html',params,countNo)
 
 def contactUs(request):
     noSale = saleData.objects.count()
     noExp = expanceData.objects.count()
+    countNo = {'noSale':noSale,'noExp':noExp}
     lastSale = saleData.objects.all().aggregate(Sum('price'))['price__sum']
     lastExp = expanceData.objects.all().aggregate(Sum('price'))['price__sum']
     if lastSale == None:
-        return render(request,'contactUs.html')
+        return render(request,'contactUs.html',countNo)
     if lastExp == None:
-        return render(request,'contactUs.html')    
+        return render(request,'contactUs.html',countNo)    
     else:
         profitLoss = lastSale - lastExp    
     params = {'noSale':noSale,'noExp':noExp,'profitLoss':profitLoss}
-    return render(request,'contactUs.html',params)    
+    return render(request,'contactUs.html',params,countNo)    
 
 def search(request):
     return render(request,'search.html')
@@ -148,16 +151,17 @@ def logIn(request):
 
     noSale = saleData.objects.count()
     noExp = expanceData.objects.count()
+    countNo = {'noSale':noSale,'noExp':noExp}
     lastSale = saleData.objects.all().aggregate(Sum('price'))['price__sum']
     lastExp = expanceData.objects.all().aggregate(Sum('price'))['price__sum']
     if lastSale == None:
-        return render(request,'logIn.html')
+        return render(request,'logIn.html',countNo)
     if lastExp == None:
-        return render( request,'logIn.html')   
+        return render( request,'logIn.html',countNo)   
     else:
         profitLoss = lastSale - lastExp   
     params = {'noSale':noSale,'noExp':noExp,'profitLoss':profitLoss}            
-    return render(request,'logIn.html',params)
+    return render(request,'logIn.html',params,countNo)
 
 
 ##################################################### LogOut function start here ##############################################################  
@@ -171,15 +175,16 @@ def logOut(request):
 def report(request):
     noSale = saleData.objects.count()
     noExp = expanceData.objects.count()
+    countNo = {'noSale':noSale,'noExp':noExp}
     lastSale = saleData.objects.all().aggregate(Sum('price'))['price__sum']
     lastExp = expanceData.objects.all().aggregate(Sum('price'))['price__sum']    
     fachSale = saleData.objects.filter().all()
     fachExp = expanceData.objects.filter().all()
     if lastSale == None:
-        return render(request,'report.html')
+        return render(request,'report.html',countNo)
     if lastExp == None:
-        return render(request,'report.html')    
+        return render(request,'report.html',countNo)    
     else:
         profitLoss = lastSale - lastExp
     params = {'noSale':noSale,'noExp':noExp,'profitLoss':profitLoss,'fachSale':fachSale,'lastSale':lastSale,'fachExp':fachExp,'lastExp':lastExp}
-    return render(request,'report.html',params)
+    return render(request,'report.html',params,countNo)
