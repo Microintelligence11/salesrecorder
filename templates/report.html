@@ -64,16 +64,16 @@ Your Business Report here - Microintelligence
         <th scope="col">Saler Price</th>
       </tr>
     </thead>
-    {% for i in fachExp %}
+    {% for x in fachExp %}
     <tbody>
       <tr>
-        <th scope="row">{{i.id}}</th>
-        <td>{{i.date}}</td>
-        <td>{{i.buyerName}}</td>
-        <td>{{i.buyerPhone}}</td>
-        <td>{{i.buyerEmail}}</td>
-        <td>{{i.serviceName}}</td>
-        <td>{{i.price}}</td>
+        <th scope="row">{{x.id}}</th>
+        <td>{{x.date}}</td>
+        <td>{{x.buyerName}}</td>
+        <td>{{x.buyerPhone}}</td>
+        <td>{{x.buyerEmail}}</td>
+        <td>{{x.serviceName}}</td>
+        <td>{{x.price}}</td>
       </tr>
     </tbody>
     {% endfor %}
