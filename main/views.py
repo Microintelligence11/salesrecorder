@@ -83,17 +83,18 @@ def expance(request):
 
         else:
             expancedata = expanceData(date=date,buyerName=buyerName,buyerPhone=buyerPhone,buyerEmail=buyerEmail,serviceName=serviceName,price=price)
+            expancedata.usr = request.user
             expancedata.save()
             messages.success(request,'your values are successfuly save.')
-            return redirect('index')                
+            return render(request,'index.html')                
     return render(request,'index.html')            
 
 def help(request):
-    noSale = saleData.objects.count()
-    noExp = expanceData.objects.count()
-    countNo = {'noSale':noSale,'noExp':noExp}
-    lastSale = saleData.objects.all().aggregate(Sum('price'))['price__sum']
-    lastExp = expanceData.objects.all().aggregate(Sum('price'))['price__sum']
+    noSale = saleData.objects.filter(usr=request.user).count()
+    noExp = expanceData.objects.filter(usr=request.user).count()
+    lastSale = saleData.objects.filter(usr=request.user).all().aggregate(Sum('price'))['price__sum']
+    lastExp = expanceData.objects.filter(usr=request.user).all().aggregate(Sum('price'))['price__sum']
+    countNo = {'noSale':noSale,'noExp':noExp,'lastSale':lastSale,'lastExp':lastExp}
     if lastSale == None:
         return render(request,'help.html',countNo)
 
@@ -101,22 +102,22 @@ def help(request):
         return render(request,'help.html',countNo)    
     else:
         profitLoss = lastSale - lastExp   
-    params = {'noSale':noSale,'noExp':noExp,'profitLoss':profitLoss}
+    params = {'profitLoss':profitLoss}
     return render(request,'help.html',params,countNo)
 
 def contactUs(request):
-    noSale = saleData.objects.count()
-    noExp = expanceData.objects.count()
-    countNo = {'noSale':noSale,'noExp':noExp}
-    lastSale = saleData.objects.all().aggregate(Sum('price'))['price__sum']
-    lastExp = expanceData.objects.all().aggregate(Sum('price'))['price__sum']
+    noSale = saleData.objects.filter(usr=request.user).count()
+    noExp = expanceData.objects.filter(usr=request.user).count()
+    lastSale = saleData.objects.filter(usr=request.user).all().aggregate(Sum('price'))['price__sum']
+    lastExp = expanceData.objects.filter(usr=request.user).all().aggregate(Sum('price'))['price__sum']
+    countNo = {'noSale':noSale,'noExp':noExp,'lastSale':lastSale,'lastExp':lastExp}
     if lastSale == None:
         return render(request,'contactUs.html',countNo)
     if lastExp == None:
         return render(request,'contactUs.html',countNo)    
     else:
         profitLoss = lastSale - lastExp    
-    params = {'noSale':noSale,'noExp':noExp,'profitLoss':profitLoss}
+    params = {'profitLoss':profitLoss}
     return render(request,'contactUs.html',params,countNo)    
 
 def search(request):
@@ -149,19 +150,19 @@ def logIn(request):
             messages.error(request,'Somethig want worng please try again later.')
             return redirect('/')
 
-    noSale = saleData.objects.count()
-    noExp = expanceData.objects.count()
-    countNo = {'noSale':noSale,'noExp':noExp}
-    lastSale = saleData.objects.all().aggregate(Sum('price'))['price__sum']
-    lastExp = expanceData.objects.all().aggregate(Sum('price'))['price__sum']
+    noSale = saleData.objects.filter(usr=request.user).count()
+    noExp = expanceData.objects.filter(usr=request.user).count()
+    lastSale = saleData.objects.filter(usr=request.user).all().aggregate(Sum('price'))['price__sum']
+    lastExp = expanceData.objects.filter(usr=request.user).all().aggregate(Sum('price'))['price__sum']
+    countNo = {'noSale':noSale,'noExp':noExp,'lastSale':lastSale,'lastExp':lastExp}
     if lastSale == None:
         return render(request,'logIn.html',countNo)
     if lastExp == None:
         return render( request,'logIn.html',countNo)   
     else:
         profitLoss = lastSale - lastExp   
-    params = {'noSale':noSale,'noExp':noExp,'profitLoss':profitLoss}            
-    return render(request,'logIn.html',params,countNo)
+        params = {'profitLoss':profitLoss}            
+    return render(request,'logIn.html',params)
 
 
 ##################################################### LogOut function start here ##############################################################  
@@ -175,10 +176,10 @@ def logOut(request):
 def report(request):
     noSale = saleData.objects.filter(usr=request.user).count()
     noExp = expanceData.objects.filter(usr=request.user).count()
-    lastSale = saleData.objects.filter(usr=request.user).all().aggregate(Sum('price'))['price__sum']
-    lastExp = expanceData.objects.filter(usr=request.user).all().aggregate(Sum('price'))['price__sum'] 
-    fachSale = saleData.objects.filter(usr=request.user).all()
-    fachExp = expanceData.objects.filter(usr=request.user).all()
+    lastSale = saleData.objects.filter(usr=request.user).aggregate(Sum('price'))['price__sum']
+    lastExp = expanceData.objects.filter(usr=request.user).aggregate(Sum('price'))['price__sum'] 
+    fachSale = saleData.objects.filter(usr=request.user)
+    fachExp = expanceData.objects.filter(usr=request.user)
     countNo = {'noSale':noSale,'noExp':noExp,'lastSale':lastSale,'lastExp':lastExp,'fachSale':fachSale,'fachExp':fachExp}   
     if lastSale == None:
         return render(request,'report.html',countNo)
