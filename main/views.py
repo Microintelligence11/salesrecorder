@@ -3,7 +3,7 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate
 from django.contrib import messages
-from . models import saleData,expanceData
+from . models import saleData,expanceData,contact
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.db.models import Sum
@@ -99,6 +99,36 @@ def help(request):
     return render(request,'help.html',params)
 
 def contactUs(request):
+    if request.method == 'POST':
+        name = request.POST['name']
+        phone = request.POST['phone']
+        email = request.POST['email']
+        address = request.POST['address']
+        quary = request.POST['quary']
+
+        if len(name)<3:
+            messages.error(request,"You name is too short plase try anouther name.")
+            return render(request,'contactUs.html')
+        if len(phone)<10:
+            messages.error(request,'Phone number not valid please try again.')
+            return render(request,'contactUs.html')
+        if len(phone)>10:
+            messages.error(request,'Phone number not valid plase try agin.')
+            return render(request,'contactUs.html')
+        if len(address)<5:
+            messages.error(request,'Address is too short please try agin later.')
+            return render(request,'contactUs.html')
+        if len(quary)<5:
+            messages.error(request,'Quary is too short please try agin later.')
+            return render(request,'contactUs.html')
+
+        else:
+            contact_view = contact(name=name,phone=phone,email=email,address=address,quary=quary)
+            contact_view.usr = request.user
+            contact_view.save()
+            messages.success(request,'Your quary has been submited sucessfuly.')
+            return render(request,'contactUs.html')
+
     noSale = saleData.objects.filter(usr=request.user).count()
     noExp = expanceData.objects.filter(usr=request.user).count()
     lastSale = saleData.objects.filter(usr=request.user).all().aggregate(Sum('price'))['price__sum']

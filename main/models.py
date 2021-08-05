@@ -24,4 +24,10 @@ class expanceData(models.Model):
     price = models.IntegerField()
     usr = models.ForeignKey(settings.AUTH_USER_MODEL,default=1,on_delete=models.CASCADE)
 
-    
+class contact(models.Model):
+    name = models.CharField(max_length=50,default="")
+    phone = models.IntegerField(default="")
+    email = models.EmailField(default="")  
+    address = models.CharField(max_length=50,default="")
+    quary = models.CharField(max_length=50,default='')
+    usr = models.ForeignKey(settings.AUTH_USER_MODEL,default=1,on_delete=models.CASCADE)
