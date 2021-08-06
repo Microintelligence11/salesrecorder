@@ -3,6 +3,20 @@
 logIn Now!
 {% endblock title %}
 {% block body %}
+
+{% if request.user.is_authenticated %}
+<div class="container my-4">
+    <div class="card">
+        <h5 class="card-header">{{request.user}}</h5>
+        <div class="card-body">
+            <h5 class="card-title">Welcome back {{request.user}}</h5>
+            <p class="card-text">You are alrady login so you are directly use our software or logout now.</p>
+            <a href="home" class="btn btn-outline-dark">Use Software</a>
+            <a href="logOut" class="btn btn-outline-dark">Logout Now</a>
+        </div>
+    </div>
+</div>
+{% endif %}
 {% if not request.user.is_authenticated %}
 <div class="container my-3">
     <h3>logIn here!</h3>

@@ -27,6 +27,10 @@ def index(request):
             messages.error(request,'Phone number not valid please try agian later.')
             return redirect('index')
 
+        if len(phone)>10:
+            messages.error(request,'Phone number not valid please try agian later.')
+            return redirect('index')
+
         if len(serviceName)<2:
             messages.error(request,'service name is too short please try again later.')
             return redirect('index')
@@ -68,6 +72,10 @@ def expance(request):
         if len(buyerPhone)<10:
             messages.error(request,'not a valid number please try again later.')
             return redirect('index')
+
+        if len(buyerPhone)>10:
+            messages.error(request,'not a valid number please try again later.')
+            return redirect('index')    
 
 
         if len(serviceName)<3:
@@ -169,18 +177,21 @@ def logIn(request):
         else:
             messages.error(request,'Somethig want worng please try again later.')
             return redirect('/')
+    
+    if not request.user.is_authenticated:
+        return render(request,'logIn.html')
 
-    noSale = saleData.objects.filter(usr=request.user).count()
-    noExp = expanceData.objects.filter(usr=request.user).count()
-    lastSale = saleData.objects.filter(usr=request.user).all().aggregate(Sum('price'))['price__sum']
-    lastExp = expanceData.objects.filter(usr=request.user).all().aggregate(Sum('price'))['price__sum']
-    # countNo = {'noSale':noSale,'noExp':noExp,'lastSale':lastSale,'lastExp':lastExp}
-    if lastSale and lastExp != None: 
-        profitLoss = lastSale - lastExp
-    else:
-        return render(request,'logIn.html')  
-    params = {'profitLoss':profitLoss,'noSale':noSale,'noExp':noExp,'lastSale':lastSale,'lastExp':lastExp}            
-    return render(request,'logIn.html',params)
+    else:    
+        noSale = saleData.objects.filter(usr=request.user).count()
+        noExp = expanceData.objects.filter(usr=request.user).count()
+        lastSale = saleData.objects.filter(usr=request.user).all().aggregate(Sum('price'))['price__sum']
+        lastExp = expanceData.objects.filter(usr=request.user).all().aggregate(Sum('price'))['price__sum']
+        if lastSale and lastExp != None: 
+            profitLoss = lastSale - lastExp
+        else:
+            return render(request,'logIn.html')  
+        params = {'profitLoss':profitLoss,'noSale':noSale,'noExp':noExp,'lastSale':lastSale,'lastExp':lastExp}            
+        return render(request,'logIn.html',params)
 
 
 ##################################################### LogOut function start here ##############################################################  
