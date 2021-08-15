@@ -3,6 +3,7 @@
 Your Business Report here - Microintelligence
 {% endblock title %}
 {% block body %}
+{% if request.user.is_authenticated %}
 <div class="container my-4 table-responsive">
   <h3>
     Business Sales Report -
@@ -45,7 +46,8 @@ Your Business Report here - Microintelligence
     </tr>
   </table>
 </div>
-
+{% endif %}
+{% if request.user.is_authenticated %}
 <div class="container my-4 table-responsive">
   <h3>
     Business Expances Report -
@@ -88,4 +90,5 @@ Your Business Report here - Microintelligence
     </tr>
   </table>
 </div>
+{% endif %}
 {% endblock body %}
