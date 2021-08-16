@@ -87,6 +87,8 @@
       </div>
     </div>
   </nav>
+
+  
   {% if messages %}
   {% for message in messages %}
   <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
@@ -95,6 +97,28 @@
   </div>
   {% endfor %}
   {% endif %}
+
+
+{% if not request.user.is_authenticated %}
+<div class="container my-3">
+    <h3>logIn here!</h3>
+    <hr>
+</div>
+<div class="container my-4">
+    <form action="/" method="post">{% csrf_token %}
+<div class="mb-3">
+  <label for="name" class="form-label">User Name</label>
+  <input type="text" class="form-control" id="userName" placeholder="Enter your user name here!" required name="userName">
+</div>
+  <div class="mb-3">
+    <label for="password" class="form-label">Password</label>
+    <input type="password" class="form-control" id="password" placeholder="Enter your password here!" required name="password">
+  </div>
+  <button type="submit" class="btn btn-outline-success">Submit</button>
+</form>
+</div>
+{% endif %}
+
   {% block body %}{% endblock body %}
   <!-- Optional JavaScript; choose one of the two! -->
 
