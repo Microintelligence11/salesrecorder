@@ -48,10 +48,21 @@ def index(request):
     if not request.user.is_authenticated:
         return render(request,'index.html')
 
-    else:             
+    else:              
         noSale = saleData.objects.filter(usr=request.user).count()
+        if noSale != None:
+            sellData = {'noSale':noSale}
+            return render(request,'index.html',sellData)
         noExp = expanceData.objects.filter(usr=request.user).count()
+        if noExp !=None:
+            buyData = {'noExp':noExp}
+            return render(request,'index.html',buyData)
+
         lastSale = saleData.objects.filter(usr=request.user).all().aggregate(Sum('price'))['price__sum']
+        if lastSale !=None:
+            lastSaleData = {'lastSale':lastSale}
+            return render(request,'index.html',lastSaleData)
+
         lastExp = expanceData.objects.filter(usr=request.user).all().aggregate(Sum('price'))['price__sum']
         if lastSale and lastExp != None:
             profitLoss = lastSale - lastExp
@@ -222,6 +233,7 @@ def report(request):
         noSale = saleData.objects.filter(usr=request.user).count()
         noExp = expanceData.objects.filter(usr=request.user).count()
         lastSale = saleData.objects.filter(usr=request.user).aggregate(Sum('price'))['price__sum']
+        print(lastSale)
         lastExp = expanceData.objects.filter(usr=request.user).aggregate(Sum('price'))['price__sum'] 
         fachSale = saleData.objects.filter(usr=request.user)
         fachExp = expanceData.objects.filter(usr=request.user)  
